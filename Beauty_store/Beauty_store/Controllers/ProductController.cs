@@ -33,9 +33,37 @@ namespace Beauty_store.Controllers
                 return View("Create1", data);
 
             }
-            
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var item = _dbContext.ProductItems.Find(id);
+            return View(item);
+        }
+        [HttpPost]
+        public IActionResult Edit(ProductItems model)
+        {
+            var item = _dbContext.ProductItems.Find(model.Id);
+            if (ModelState.IsValid)
+            {
+                item.Name = model.Name;
+                item.Price = model.Price;
+                item.Count = model.Count;
+                item.Image = model.Image;
+                _dbContext.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(model);
 
-            [HttpGet]
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var item = _dbContext.ProductItems.Find(id);
+            return View(item);
+        }
+
+        [HttpGet]
             public IActionResult Init()
             {
                 if (_dbContext.ProductItems.Any())
