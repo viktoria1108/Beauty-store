@@ -33,9 +33,24 @@ namespace Beauty_store.Controllers
                 return View("Create1", data);
 
             }
-            
 
-            [HttpGet]
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            return View(_dbContext.ProductItems.Find(id));
+        }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            _dbContext.ProductItems.Remove(_dbContext.ProductItems.Find(id));
+            _dbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+
+
+        [HttpGet]
             public IActionResult Init()
             {
                 if (_dbContext.ProductItems.Any())
